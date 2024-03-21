@@ -17,13 +17,13 @@ class KNN:
     def set_k(self, k):
         self.k = k
 
-    # Store TRAINING samples to use them later
+    # Store TRAINING samples
     def fit(self, X, y):
         self.X_train_features = X
         self.y_train_labels = y
 
     # This method receives multiple TEST samples
-    def predict_samples(self, X):
+    def predict(self, X):
         predict_labels = [self.predict_sample(x) for x in X]
         return np.array(predict_labels)
 
