@@ -1,0 +1,1 @@
+Single-layer neural network written from scratch predicting typed language based on letter proportions.
