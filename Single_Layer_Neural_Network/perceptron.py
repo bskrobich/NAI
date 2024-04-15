@@ -1,11 +1,6 @@
 import numpy as np
 
 
-def accuracy(y_true, y_pred):
-    acc = np.mean(y_pred == y_true)
-    return acc
-
-
 class Perceptron:
     def __init__(self, X_test=None, y_test=None, learning_rate=0.01, epochs=1):
         self.learning_rate = learning_rate
