@@ -29,9 +29,7 @@ class Perceptron:
                     self.threshold += (y[index] - predicted_output) * self.learning_rate * (-1)
 
     def predict(self, X):
-        net = np.dot(X, self.weights) - self.threshold
-        predicted_output = self.activation_function(net)
-        return predicted_output
+        return np.dot(X, self.weights) - self.threshold
 
     @staticmethod
     def activation_function(net):
