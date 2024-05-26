@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iostream>
 #include <fstream>
 #include <vector>
 #include <cmath>
@@ -33,13 +32,51 @@ pair<int, vector<Item>> readInput(const string& filename) {
     return {totalCapacity, items};
 }
 
+tuple<vector<int>, int, int> knapsackBruteForce(int totalCapacity, const vector<Item>& items) {
+    int numberOfItems = items.size();
+    int bestValue = 0;
+    int bestWeight = 0;
+    vector<int> bestCombination;
+
+    int totalCombinations = pow(2, numberOfItems);
+
+    for (int i = 0; i < totalCombinations; ++i) {
+        vector<int> combination(numberOfItems, 0);
+        int totalWeight = 0;
+        int totalValue = 0;
+
+        for (int j = 0; j < numberOfItems; ++j) {
+            if ((i & (1 << j)) != 0) {
+                combination[j] = 1;
+                totalWeight += items[j].weight;
+                totalValue += items[j].value;
+            }
+        }
+        if (totalWeight <= totalCapacity && totalValue > bestValue) {
+            bestValue = totalValue;
+            bestWeight = totalWeight;
+            bestCombination = combination;
+        }
+    }
+    return {bestCombination, bestValue, bestWeight};
+}
+
 int main() {
-    string filename;
-    cout << "Enter data file absolute path: ";
-    cin >> filename;
+    string filename = "../data.txt";
     auto [totalCapacity, items] = readInput(filename);
 
-    cout << "Total capacity: " << totalCapacity << endl;
-    cout << "Number of items: " << items.size() << endl;
+    auto start = high_resolution_clock::now();
+    auto [bestCombination, bestValue, totalWeight] = knapsackBruteForce(totalCapacity, items);
+    auto end = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(end - start);
 
+    cout << "Best combination:";
+    for (int i : bestCombination) {
+        cout << " " << i;
+    }
+    cout << "\nBest value: " << bestValue << endl;
+    cout << "Total weight: " << totalWeight << endl;
+    cout << "Execution time: " << duration.count() / 1000.0 << " seconds" << endl;
+
+    return 0;
 }
