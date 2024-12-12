@@ -1,1 +1,1 @@
-# NAI
+# NAI - Artificial Intelligence Tools 
